@@ -19,10 +19,10 @@ const convertToJPG = async (req, res) => {
     converter.convert();
     const imgUrls = [];
     if (pages == 1) {
-        imgUrls.push(`http://localhost:5000/output/${req.files[0].filename.split('.')[0]}.jpg`);
+        imgUrls.push(`http://3.15.93.104:8080/output/${req.files[0].filename.split('.')[0]}.jpg`);
     } else {
         for (let i = 1; i <= pages; i++) {
-            imgUrls.push(`http://localhost:5000/output/${req.files[0].filename.split('.')[0]}-${i}.jpg`);
+            imgUrls.push(`http://3.15.93.104:8080/output/${req.files[0].filename.split('.')[0]}-${i}.jpg`);
         }
     }
     res.json({
@@ -44,10 +44,10 @@ const convertToJPGExisting = async (req, res) => {
     converter.convert();
     const imgUrls = [];
     if (pages == 1) {
-        imgUrls.push(`http://localhost:5000/output/${req.params.fileName}.jpg`);
+        imgUrls.push(`http://3.15.93.104:8080/output/${req.params.fileName}.jpg`);
     } else {
         for (let i = 1; i <= pages; i++) {
-            imgUrls.push(`http://localhost:5000/output/${req.params.fileName}-${i}.jpg`);
+            imgUrls.push(`http://3.15.93.104:8080/output/${req.params.fileName}-${i}.jpg`);
         }
     }
     res.json({
