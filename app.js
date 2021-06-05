@@ -25,7 +25,7 @@ app.use(
 app.use(express.json());
 app.use(cors());
 app.use(upload.array('theFiles'));
-//app.use(express.static(path.resolve(__dirname, 'client/build')));
+app.use(express.static(path.resolve(__dirname, 'client/build')));
 app.use('/convert',convertRoutes);
 app.use('/files',fileRoutes);
 app.use('/history',historyRoutes);
