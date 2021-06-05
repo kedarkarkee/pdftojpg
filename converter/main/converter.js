@@ -96,7 +96,7 @@ class Converter {
      * @return {string}
      */
     get execPath() {
-        this.setConverter("magick.exe  -quality 90 -density 96 -scene 1");
+        this.setConverter("convert  -quality 90 -density 96 -scene 1");
         return this.converter + ' "' + this.oldFile.path + '" "' + this.newFile.replace('png','jpg') + '"';
     }
 
