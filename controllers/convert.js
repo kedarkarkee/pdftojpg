@@ -6,7 +6,6 @@ const Converter = require('../converter/pdfconverter');
 const rootPath = require('../rootpath');
 
 const convertToJPG = async (req, res) => {
-    await fs.emptyDir(path.join(rootPath, 'output'));
     const p = path.join(rootPath, req.files[0].path);
     const dataBuffer = fs.readFileSync(p);
     const pdfDetails = await pdf(dataBuffer);
@@ -31,7 +30,6 @@ const convertToJPG = async (req, res) => {
     });
 }
 const convertToJPGExisting = async (req, res) => {
-    await fs.emptyDir(path.join(rootPath, 'output'));
     const p = path.join(rootPath, 'uploads',req.params.fileName +'.pdf');
     const dataBuffer = fs.readFileSync(p);
     const pdfDetails = await pdf(dataBuffer);
