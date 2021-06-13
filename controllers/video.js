@@ -10,7 +10,6 @@ const resizeVideo = (req, res) => {
         command.keepDAR();
     }
     command.on('end', () => {
-        console.log("Converted");
         res.status(200).sendFile(outputPath);
     }).on('progress', function (progress) {
         sendMessage(req.body.socketId,"PROGRESS",progress.percent);
