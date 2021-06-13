@@ -37,7 +37,7 @@ app.use('/videoconvert',upload.single('video'),videoRoutes);
 app.use('/files',fileRoutes);
 app.use('/history',historyRoutes);
 app.use('/', async (_, res) => {
-    res.end("Nothing Here");
+    res.status(301).redirect('/');
 });
 const PORT = process.env.PORT || 8080;
 const server = http.createServer(app);

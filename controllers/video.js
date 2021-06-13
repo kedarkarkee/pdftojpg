@@ -16,7 +16,6 @@ const resizeVideo = (req, res) => {
     }).save(outputPath);
 }
 const resizeExisting = (req, res) => {
-    console.log(req.body);
     const inputPath = path.join(rootPath,'uploads','videos',req.body.fileName);
     const command = ffmpeg(inputPath).size(req.body.size);
     const outputPath = path.join(rootPath, 'output', req.body.fileName);
@@ -24,10 +23,9 @@ const resizeExisting = (req, res) => {
         command.keepDAR();
     }
     command.on('end', () => {
-        console.log("Converted");
         res.status(200).sendFile(outputPath);
     }).on('progress', function (progress) {
-        console.log('Processing: ' + progress.percent + '% done');
+        sendMessage(req.body.socketId,"PROGRESS",progress.percent);
     }).save(outputPath);
 }
 
