@@ -1,8 +1,9 @@
 const express = require('express');
-const getHistory = require('../controllers/history');
+const {getPDFHistory, getVideoHistory} = require('../controllers/history');
 
 const router = express.Router();
 
-router.get('/',getHistory);
+router.get('/pdf',getPDFHistory);
+router.get('/video',getVideoHistory);
 
 module.exports = router;

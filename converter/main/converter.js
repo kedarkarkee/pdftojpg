@@ -96,8 +96,10 @@ class Converter {
      * @return {string}
      */
     get execPath() {
-        this.setConverter("convert  -quality 90 -density 96 -scene 1");
-        return this.converter + ' "' + this.oldFile.path + '" "' + this.newFile.replace('png','jpg') + '"';
+        //TODO set full quality
+        this.setConverter('convert -quality 100 -density 300 -colorspace RGB -scene 1');
+        // this.setConverter('convert -quality 90 -density 96 -colorspace RGB -background "#FFFFFF" -scene 1');
+        return this.converter + ' "' + this.oldFile.path + '" "' + this.newFile + '"';
     }
 
     /**

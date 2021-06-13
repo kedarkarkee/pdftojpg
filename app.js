@@ -1,17 +1,24 @@
 const express = require('express');
 const path = require('path');
+const http = require('http');
 const multer = require('multer');
 const cors = require('cors');
+const {socketConnection} = require('./socket');
 
 //Route Imports
 const convertRoutes = require('./routes/convert');
 const fileRoutes = require('./routes/files');
 const historyRoutes = require('./routes/history');
+const videoRoutes = require('./routes/video');
 
 const app = express();
 const upload = multer({
     storage: multer.diskStorage({
-        destination: './uploads',
+        destination: (req,file,cb)=>{
+            if(file.fieldname === 'pdf')
+            return cb(null,'./uploads/pdf');
+            return cb(null,'./uploads/videos');
+        },
         filename: (_, file, cb) => cb(null, file.originalname),
     }),
 });
@@ -24,15 +31,17 @@ app.use(
 );
 app.use(express.json());
 app.use(cors());
-app.use(upload.array('theFiles'));
 app.use(express.static(path.resolve(__dirname, 'client/build')));
-app.use('/convert',convertRoutes);
+app.use('/convert',upload.single('pdf'),convertRoutes);
+app.use('/videoconvert',upload.single('video'),videoRoutes);
 app.use('/files',fileRoutes);
 app.use('/history',historyRoutes);
 app.use('/', async (_, res) => {
     res.end("Nothing Here");
 });
-const PORT = process.env.PORT || 8080
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 8080;
+const server = http.createServer(app);
+socketConnection(server);
+server.listen(PORT, () => {
     console.log('Listening on ' + PORT);
 });

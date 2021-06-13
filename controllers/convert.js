@@ -4,9 +4,10 @@ const pdf = require('pdf-page-counter');
 const archiver = require('archiver');
 const Converter = require('../converter/pdfconverter');
 const rootPath = require('../rootpath');
+const serverPath = require('../serverpath');
 
 const convertToJPG = async (req, res) => {
-    const p = path.join(rootPath, req.files[0].path);
+    const p = path.join(rootPath, req.file.path);
     const dataBuffer = fs.readFileSync(p);
     const pdfDetails = await pdf(dataBuffer);
     const pages = pdfDetails.numpages;
@@ -18,10 +19,10 @@ const convertToJPG = async (req, res) => {
     converter.convert();
     const imgUrls = [];
     if (pages == 1) {
-        imgUrls.push(`http://3.15.93.104:8080/output/${req.files[0].filename.split('.')[0]}.jpg`);
+        imgUrls.push(`${serverPath}/output/${req.file.filename.split('.')[0]}.png`);
     } else {
         for (let i = 1; i <= pages; i++) {
-            imgUrls.push(`http://3.15.93.104:8080/output/${req.files[0].filename.split('.')[0]}-${i}.jpg`);
+            imgUrls.push(`${serverPath}/output/${req.file.filename.split('.')[0]}-${i}.png`);
         }
     }
     res.json({
@@ -30,7 +31,7 @@ const convertToJPG = async (req, res) => {
     });
 }
 const convertToJPGExisting = async (req, res) => {
-    const p = path.join(rootPath, 'uploads',req.params.fileName +'.pdf');
+    const p = path.join(rootPath, 'uploads','pdf',req.params.fileName +'.pdf');
     const dataBuffer = fs.readFileSync(p);
     const pdfDetails = await pdf(dataBuffer);
     const pages = pdfDetails.numpages;
@@ -42,10 +43,10 @@ const convertToJPGExisting = async (req, res) => {
     converter.convert();
     const imgUrls = [];
     if (pages == 1) {
-        imgUrls.push(`http://3.15.93.104:8080/output/${req.params.fileName}.jpg`);
+        imgUrls.push(`${serverPath}/output/${req.params.fileName}.png`);
     } else {
         for (let i = 1; i <= pages; i++) {
-            imgUrls.push(`http://3.15.93.104:8080/output/${req.params.fileName}-${i}.jpg`);
+            imgUrls.push(`${serverPath}/output/${req.params.fileName}-${i}.png`);
         }
     }
     res.json({
