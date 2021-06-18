@@ -23,6 +23,7 @@ const upload = multer({
     }),
 });
 app.use('/output', express.static(path.join(__dirname, 'output')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use(
     express.urlencoded({

@@ -7,6 +7,6 @@ router.get('/images/:fileName',getImage);
 router.get('/pdf/:fileName',getPDF);
 router.delete('/pdf/:fileName',deletePDF);
 router.get('/video/:fileName',getVideo);
-router.delete('/video/:fileName',deleteVideo);
+router.delete('/video/:id',deleteVideo);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const path = require('path');
 const rootpath = require('../rootpath');
 const fs = require('fs');
+const openDb = require('../db');
 
 const getImage = (req,res) => {
     const fileName = req.params.fileName;
@@ -27,14 +28,19 @@ const getVideo = (req,res) => {
     const videoPath = path.join(rootpath, 'uploads','videos', fileName);
     res.status(200).sendFile(videoPath);
 }
-const deleteVideo = (req,res) => {
-    const fileName = req.params.fileName;
-    const pdfPath = path.join(rootpath, 'uploads','videos', fileName);
-    fs.unlink(pdfPath,(err)=>{
+const deleteVideo = async(req,res) => {
+    const db = await openDb();
+    const id = req.params.id;
+    const {filePath} = await db.get('SELECT filePath from vuploads WHERE id=?',id);
+    fs.unlink(filePath,async(err)=>{
         if(err){
+            if(fs.existsSync(filePath)){
             return res.status(400).json({status: 'Failed'});
+            }
         }
+        await db.run('DELETE FROM vuploads WHERE id=?',id);
+        await db.run('DELETE FROM voutputs WHERE inputId=?',id);
         return res.status(200).json({status: 'Success'});
-    })
+    });
 }
 module.exports = {getImage,getPDF,deletePDF,getVideo,deleteVideo};
