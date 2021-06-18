@@ -8,10 +8,10 @@ const convertVideos = async (sizes, file, db, id, keepDAR) => {
     let count = 0;
     for (let size of sizes) {
         const leftPath = file.filename.substring(0, file.filename.lastIndexOf('.'));
-        const extension = file.filename.substring(file.filename.lastIndexOf('.'));
-        const newFileName = leftPath + size.replace('?', '') + extension;
+        // const extension = file.filename.substring(file.filename.lastIndexOf('.'));
+        const newFileName = leftPath + size.replace('?', '') + '.mp4';
         const outputPath = path.join(rootPath, 'output', 'videos', newFileName);
-        const command = ffmpeg(path.join(rootPath, file.path)).size(size);
+        const command = ffmpeg(path.join(rootPath, file.path)).size(size).format('mp4');
         if (keepDAR) {
             command.keepDAR();
         }
