@@ -41,7 +41,7 @@ const uploadAndUnlinkFile = async (db, lastID, page, outputFileName,archive) => 
     const outputPath = path.join(rootPath, 'output', outputFileName);
     archive.file(outputPath,{name: outputFileName});
     const { Key, Location } = await uploadFile({ path: outputPath, filename: outputFileName }, 'pdf/converted/');
-    const cDbRes = await db.run('INSERT INTO pdfoutputs (inputId,fileName,key,location,page) VALUES (?,?,?,?,?)', lastID, outputFileName, Key, Location, 1);
+    const cDbRes = await db.run('INSERT INTO pdfoutputs (inputId,fileName,key,location,page) VALUES (?,?,?,?,?)', lastID, outputFileName, Key, Location, page);
     fs.unlinkSync(outputPath);
     return { id: cDbRes.lastID, inputId: lastID, fileName: outputFileName, key: Key, location: Location, page: page };
 }
