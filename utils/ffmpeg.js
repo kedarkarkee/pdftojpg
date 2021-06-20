@@ -11,8 +11,8 @@ const convertVideo = async (sizes, file, db, id, keepDAR) => {
         let count = 1;
         for (let size of sizes) {
             try {
-                const {Key,Location} = await videoConvert(leftPath, filePath, size, keepDAR);
-                await db.run('INSERT INTO voutputs (resolution,inputId,fileName,key,location) VALUES (?,?,?,?,?)', size, id, file.filename, Key, Location);
+                const {Key,Location,newFileName} = await videoConvert(leftPath, filePath, size, keepDAR);
+                await db.run('INSERT INTO voutputs (resolution,inputId,fileName,key,location) VALUES (?,?,?,?,?)', size, id, newFileName, Key, Location);
                 await db.run('UPDATE vuploads SET finished = ? WHERE id = ?', ++count, id);
             } catch (e) {
                 console.log(e);
@@ -70,7 +70,7 @@ const videoConvert = (leftPath, filePath, size, keepDAR) => {
         command.on('end', async () => {
             const result = await uploadFile({ path: outputPath, filename: newFileName }, 'videos/converted/');
             fs.unlink(outputPath, (_) => {
-                return resolve(result);
+                return resolve({...result,newFileName});
             });
         }).on('error', (e) => {
             return reject(new Error(e));
