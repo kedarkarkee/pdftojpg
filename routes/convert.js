@@ -3,7 +3,7 @@ const {convertToJPG,convertToZip, convertToJPGExisting} = require('../controller
 
 const router = express.Router();
 
-router.get('/jpg/:fileName',convertToJPGExisting);
+router.get('/jpg/:id',convertToJPGExisting);
 router.post('/jpg',convertToJPG);
 router.post('/zip',convertToZip);
 

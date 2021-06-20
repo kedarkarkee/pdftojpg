@@ -4,6 +4,7 @@ const http = require('http');
 const multer = require('multer');
 const cors = require('cors');
 const {socketConnection} = require('./socket');
+require('dotenv').config();
 
 //Route Imports
 const convertRoutes = require('./routes/convert');
