@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const multer = require('multer');
 const cors = require('cors');
+const helmet = require('helmet');
 require('dotenv').config();
 
 // Route Imports
@@ -30,6 +31,7 @@ app.use(
 );
 app.use(express.json());
 app.use(cors());
+app.use(helmet());
 app.use(express.static(path.resolve(__dirname, 'client/build')));
 app.use('/convert', upload.single('pdf'), convertRoutes);
 app.use('/videoconvert', upload.single('video'), videoRoutes);
