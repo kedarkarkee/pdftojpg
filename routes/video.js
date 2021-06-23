@@ -1,11 +1,9 @@
-const express = require('express');
-const {resizeVideo, resizeExisting, getConvertedVideos} = require('../controllers/video'); 
+const { Router } = require('express');
+const { resizeVideo, getConvertedVideos } = require('../controllers/video');
 
+const router = Router();
 
-const router = express.Router();
-
-router.post('/resize',resizeVideo);
-router.get('/converted/:id',getConvertedVideos);
-router.post('/resizeExisting',resizeExisting);
+router.post('/resize', resizeVideo);
+router.get('/converted/:id', getConvertedVideos);
 
 module.exports = router;

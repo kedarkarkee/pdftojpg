@@ -1,17 +1,14 @@
-const express = require('express');
-const {getUploadedVideo, getConvertedVideo, getThumbnail, deleteVideo, getPDF, getImage, deletePDF} = require('../controllers/files');
+const { Router } = require('express');
+const { getConvertedVideo, getThumbnail, deleteVideo, getPDF, getImage, deletePDF } = require('../controllers/files');
 
-const router = express.Router();
+const router = Router();
 
-router.get('/videos/uploads/:key',getUploadedVideo);
-router.get('/videos/converted/:key',getConvertedVideo);
-router.get('/videos/thumbnails/:key',getThumbnail);
-router.get('/pdf/uploads/:key',getPDF);
-router.get('/pdf/converted/:key',getImage);
-// router.get('/images/:fileName',getImage);
-// router.get('/pdf/:fileName',getPDF);
-router.delete('/pdf/:id',deletePDF);
-// router.get('/video/:fileName',getVideo);
-router.delete('/video/:id',deleteVideo);
+// router.get('/videos/uploads/:key', getUploadedVideo);
+router.get('/videoout/:key', getConvertedVideo);
+router.get('/thumbnail/:key', getThumbnail);
+router.get('/pdfin/:key', getPDF);
+router.get('/pdfout/:key', getImage);
+router.delete('/pdf/:id', deletePDF);
+router.delete('/video/:id', deleteVideo);
 
 module.exports = router;

@@ -1,5 +1,5 @@
-const {platform} = require('process');
-const {Converter} = require('./main/converter');
+const { platform } = require('process');
+const { Converter } = require('./main/converter');
 const Options = require('./options');
 
 /**
@@ -9,7 +9,7 @@ class PdfToPngConverter extends Converter {
     /**
      * Define all convert options.
      */
-    constructor() {
+    constructor () {
         super();
         this.convertString = '';
     }
@@ -19,10 +19,10 @@ class PdfToPngConverter extends Converter {
      *
      * @return {string}
      */
-    get converter() {
+    get converter () {
         const converters = {
-            darwin:  this.converterForMac,
-            win32:   this.converterForWindows,
+            darwin: this.converterForMac,
+            win32: this.converterForWindows,
             default: this.converterForLinux
         };
 
@@ -47,7 +47,7 @@ class PdfToPngConverter extends Converter {
      *
      * @return {string}
      */
-    get converterForLinux() {
+    get converterForLinux () {
         return `convert ${this.convertString} -colorspace RGB`;
     }
 
@@ -56,7 +56,7 @@ class PdfToPngConverter extends Converter {
      *
      * @return {string}
      */
-    get converterForMac() {
+    get converterForMac () {
         return `convert ${this.convertString} -colorspace RGB`;
     }
 
@@ -65,7 +65,7 @@ class PdfToPngConverter extends Converter {
      *
      * @return {strring}
      */
-    get converterForWindows() {
+    get converterForWindows () {
         return `magick.exe ${this.convertString} -colorspace RGB`;
     }
 
@@ -74,8 +74,8 @@ class PdfToPngConverter extends Converter {
      *
      * @return {string}
      */
-    get newFile() {
-        return this.output + this.oldFile.name + '.png';
+    get newFile () {
+        return this.output + this.oldFile.name + '.jpg';
     }
 
     /**
@@ -83,7 +83,7 @@ class PdfToPngConverter extends Converter {
      *
      * @param {string} convertString
      */
-    setConvertString(convertString) {
+    setConvertString (convertString) {
         if (!convertString) {
             return;
         }
@@ -106,7 +106,7 @@ class PdfToPngConverter extends Converter {
      *
      * @return {object}
      */
-    static create({
+    static create ({
         file,
         output,
         customConverter,

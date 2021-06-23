@@ -1,10 +1,10 @@
-const express = require('express');
-const {convertToJPG,convertToZip, convertToJPGExisting} = require('../controllers/convert'); 
+const { Router } = require('express');
+const { convertToJPG, convertToZip, getExistingConvertedFiles } = require('../controllers/convert');
 
-const router = express.Router();
+const router = Router();
 
-router.get('/jpg/:id',convertToJPGExisting);
-router.post('/jpg',convertToJPG);
-router.post('/zip',convertToZip);
+router.get('/jpg/:id', getExistingConvertedFiles);
+router.post('/jpg', convertToJPG);
+router.post('/zip', convertToZip);
 
 module.exports = router;
