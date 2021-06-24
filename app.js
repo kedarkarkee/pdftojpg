@@ -30,7 +30,7 @@ app.use(
 );
 app.use(express.json());
 app.use(cors());
-app.use(express.static(path.resolve(__dirname, 'client/build')));
+// app.use(express.static(path.resolve(__dirname, 'client/build')));
 app.use('/convert', upload.single('pdf'), convertRoutes);
 app.use('/videoconvert', upload.single('video'), videoRoutes);
 app.use('/files', fileRoutes);
@@ -38,6 +38,13 @@ app.use('/history', historyRoutes);
 app.use('/', (_, res) => {
   res.status(301).redirect('/');
 });
+app.use('/', (err, _req, res, _next) => {
+  if (err) {
+    res.json({ error: err.message || 'Something went wrong!' });
+  } else {
+    res.status(301).redirect('/');
+  };
+})
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log('Listening on ' + PORT);
