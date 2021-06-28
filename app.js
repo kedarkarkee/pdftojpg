@@ -40,6 +40,7 @@ app.use('/', (_, res) => {
 });
 app.use('/', (err, _req, res, _next) => {
   if (err) {
+    console.log(err);
     res.json({ error: err.message || 'Something went wrong!' });
   } else {
     res.status(301).redirect('/');

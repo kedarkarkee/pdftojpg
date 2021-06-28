@@ -4,7 +4,7 @@ const {
   fileExists,
   getFileName
 } = require('./fs');
-const { execSync } = require('child_process');
+const { exec } = require('child_process');
 
 /**
  * Converter
@@ -96,27 +96,29 @@ class Converter {
      * @return {string}
      */
   get execPath () {
-    // TODO set full quality
-    this.setConverter('convert -quality 100 -density 300 -colorspace RGB -scene 1');
-    // this.setConverter('convert -quality 90 -density 96 -colorspace RGB -background "#FFFFFF" -scene 1');
-    return this.converter + ' "' + this.oldFile.path + '" "' + this.newFile + '"';
+    // this.setConverter('convert -quality 100 -density 200 -colorspace RGB -scene 1');
+    this.setConverter('gm convert -quality 100 -density 200 -colorspace RGB');
+    const newFileName = this.newFile.substring(0, this.newFile.lastIndexOf('.')) + '-%d.jpg';
+    const command = this.converter + ' "' + this.oldFile.path + '" +adjoin "' + newFileName + '"';
+    // return this.converter + ' "' + this.oldFile.path + '" "' + this.newFile + '"';
+    return command;
   }
 
   /**
      * Convert pdf files to png files.
      *
-     * @return {array}
+     * @return {Promise}
      */
   convert () {
-    const fileName = getFileName(this.oldFile.path);
-
-    const output = execSync(this.execPath);
-
-    return {
-      file: this.oldFile,
-      fileName,
-      output
-    };
+    // const output = execSync(this.execPath);
+    return new Promise((resolve, reject) => {
+      exec(this.execPath, (err, _stdout, _stderr) => {
+          if (err) {
+            return reject(err);
+          }
+          return resolve();
+      })
+    });
   }
 
   /**

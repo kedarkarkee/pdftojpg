@@ -22,12 +22,12 @@ const createArchiver = () => {
   return archive;
 }
 
-const convertPDFtoImage = (filePath) => {
+const convertPDFtoImage = async (filePath) => {
   const converter = Converter.create({
     file: filePath,
     output: 'output/'
   });
-  converter.convert();
+  await converter.convert();
 }
 
 const getPDFPages = async (filePath) => {

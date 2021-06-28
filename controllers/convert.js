@@ -12,8 +12,10 @@ const convertToJPG = async (req, res, next) => {
     const timestamp = Date.now();
     const db = await openDb();
     const { Key, Location } = await uploadFile(req.file, BucketNames.pdfInBucketName);
-    const { lastID } = await db.run('INSERT INTO pdfuploads (timestamp,fileName,key,location,total) VALUES (?,?,?,?,?)', timestamp, req.file.filename, Key, Location, pages);
-    convertPDFtoImage(p);
+    const { lastID } = await db.run('INSERT INTO pdfuploads (timestamp,fileName,key,location,status,total) VALUES (?,?,?,?,?,?)', timestamp, req.file.filename, Key, Location, 'Converting', pages);
+    res.json({ status: 'success' });
+    await convertPDFtoImage(p);
+    await db.run('UPDATE pdfuploads SET status = ? WHERE id = ?', 'Uploading to S3', lastID);
     const leftPath = req.file.filename.substring(0, req.file.filename.lastIndexOf('.'));
     const convertedImages = [];
     const zipPath = path.join(rootPath, 'output', 'output.zip');
@@ -26,16 +28,18 @@ const convertToJPG = async (req, res, next) => {
     archive.pipe(output);
     if (pages === 1) {
       const fileInfo = {
-        outputFileName: `${leftPath}.jpg`,
+        // outputFileName: `${leftPath}.jpg`,
+        outputFileName: `${leftPath}-0.jpg`,
         newFileName: `${leftPath}1.jpg`,
         originalName: req.file.filename
       };
       convertedImages.push(await uploadAndUnlinkFile(db, lastID, 1, fileInfo, archive));
     } else {
-      for (let i = 1; i <= pages; i++) {
+      // for (let i = 1; i <= pages; i++) {
+      for (let i = 0; i < pages; i++) {
         const fileInfo = {
           outputFileName: `${leftPath}-${i}.jpg`,
-          newFileName: `${leftPath}${i}.jpg`,
+          newFileName: `${leftPath}${i + 1}.jpg`,
           originalName: req.file.filename
         };
         convertedImages.push(await uploadAndUnlinkFile(db, lastID, i, fileInfo, archive));
@@ -43,11 +47,11 @@ const convertToJPG = async (req, res, next) => {
     }
     archive.finalize();
     await unlinkFile(p);
-    res.json({
-      files: convertedImages
-    });
+    await db.run('UPDATE pdfuploads SET status = ? WHERE id = ?', '', lastID);
+    // res.json({
+    //   files: convertedImages
+    // });
   } catch (e) {
-    next(e);
   }
 }
 const getExistingConvertedFiles = async (req, res, next) => {

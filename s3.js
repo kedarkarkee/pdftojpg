@@ -27,7 +27,11 @@ const uploadFile = (file, bucketName) => {
     Body: fileStream,
     Key: file.filename
   }
-  return s3.upload(uploadParams).promise()
+  try {
+    return s3.upload(uploadParams).promise()
+  } catch (e) {
+    return Promise.reject(e);
+  }
 }
 exports.uploadFile = uploadFile
 
@@ -44,3 +48,16 @@ const getFileStream = (fileKey, bucketName) => {
   }
 }
 exports.getFileStream = getFileStream
+
+const deleteFile = (fileKey, bucketName) => {
+  try {
+    const deleteParams = {
+      Key: fileKey,
+      Bucket: bucketName
+    }
+    return s3.deleteObject(deleteParams).promise();
+  } catch (_e) {
+    return null;
+  }
+}
+exports.deleteFile = deleteFile
