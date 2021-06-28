@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getConvertedVideo, getThumbnail, deleteVideo, getPDF, getImage, deletePDF } = require('../controllers/files');
+const { getConvertedVideo, getThumbnail, deleteVideo, getPDF, getImage, deletePDF, deletePDFPermanent, deleteVideoPermanent } = require('../controllers/files');
 
 const router = Router();
 
@@ -9,6 +9,8 @@ router.get('/thumbnail/:key', getThumbnail);
 router.get('/pdfin/:key', getPDF);
 router.get('/pdfout/:key', getImage);
 router.delete('/pdf/:id', deletePDF);
+router.delete('/pdfPermanent/:id', deletePDFPermanent);
+router.delete('/videoPermanent/:id', deleteVideoPermanent);
 router.delete('/video/:id', deleteVideo);
 
 module.exports = router;

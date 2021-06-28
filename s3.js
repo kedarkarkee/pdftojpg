@@ -49,15 +49,17 @@ const getFileStream = (fileKey, bucketName) => {
 }
 exports.getFileStream = getFileStream
 
-const deleteFile = (fileKey, bucketName) => {
+const deleteFiles = (fileKeys, bucketName) => {
   try {
     const deleteParams = {
-      Key: fileKey,
-      Bucket: bucketName
+      Bucket: bucketName,
+      Delete: {
+        Objects: fileKeys
+      }
     }
-    return s3.deleteObject(deleteParams).promise();
+    return s3.deleteObjects(deleteParams).promise();
   } catch (_e) {
     return null;
   }
 }
-exports.deleteFile = deleteFile
+exports.deleteFiles = deleteFiles

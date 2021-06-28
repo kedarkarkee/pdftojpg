@@ -97,10 +97,10 @@ class Converter {
      */
   get execPath () {
     // this.setConverter('convert -quality 100 -density 200 -colorspace RGB -scene 1');
+    // return this.converter + ' "' + this.oldFile.path + '" "' + this.newFile + '"';
     this.setConverter('gm convert -quality 100 -density 200 -colorspace RGB');
     const newFileName = this.newFile.substring(0, this.newFile.lastIndexOf('.')) + '-%d.jpg';
     const command = this.converter + ' "' + this.oldFile.path + '" +adjoin "' + newFileName + '"';
-    // return this.converter + ' "' + this.oldFile.path + '" "' + this.newFile + '"';
     return command;
   }
 
