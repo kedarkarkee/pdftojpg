@@ -42,7 +42,7 @@ const convertToJPG = async (req, res, next) => {
           newFileName: `${leftPath}${i + 1}.jpg`,
           originalName: req.file.filename
         };
-        convertedImages.push(await uploadAndUnlinkFile(db, lastID, i, fileInfo, archive));
+        convertedImages.push(await uploadAndUnlinkFile(db, lastID, i + 1, fileInfo, archive));
       }
     }
     archive.finalize();
