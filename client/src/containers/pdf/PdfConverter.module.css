@@ -1,0 +1,117 @@
+.Gallery {
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 15px;
+}
+
+.Gallery:hover {
+  border: 1px solid #777;
+}
+
+.Gallery img {
+  width: 100%;
+  height: auto;
+}
+
+.Desc {
+  padding: 15px;
+  text-align: center;
+}
+
+.Responsive {
+  padding: 0 1rem;
+  float: left;
+  width: 24.99999%;
+}
+
+@media only screen and (max-width: 700px) {
+  .Responsive {
+    width: 49.99999%;
+    margin: 6px 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .Responsive {
+    width: 100%;
+  }
+}
+
+.Clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.Button {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10rem;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1;
+  text-align: center;
+}
+.Button:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0cf;
+  border-radius: 10rem;
+  z-index: -2;
+}
+.Button:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: #008fb3;
+  transition: all 0.3s;
+  border-radius: 10rem;
+  z-index: -1;
+}
+.Button:hover {
+  color: #fff;
+}
+.Button:hover:before {
+  width: 100%;
+}
+.UploadButton{
+margin-top: 1rem;
+text-align: center;
+}
+.Centered {
+text-align: center;
+margin: 1rem;
+}
+.Grouped {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+}
+.Switch {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  margin-top: 1rem;
+  border-radius: 10rem;
+  color: blue;
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1;
+  text-align: center;
+}

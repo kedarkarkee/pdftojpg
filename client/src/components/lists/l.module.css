@@ -1,0 +1,292 @@
+.Img {
+	vertical-align: middle;
+	border-style: none;
+	height: 50px;
+	cursor: pointer;
+} 
+
+.Button {
+	border: none;
+	display: inline-block;
+	padding: 8px 16px;
+	vertical-align: middle;
+	overflow: hidden;
+	text-decoration: none;
+	color: inherit;
+	background-color: inherit;
+	text-align: center;
+	cursor: pointer;
+	white-space: nowrap
+}
+
+.Button {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none
+}
+
+.Button:disabled {
+	cursor: not-allowed;
+	opacity: .3
+}
+
+/* :disabled * {
+	pointer-events: none
+} */
+
+.W3ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0
+}
+
+.W3ul li {
+	padding: 8px 16px;
+	border-bottom: 1px solid #ddd
+}
+
+.W3ul li:last-child {
+	border-bottom: none
+}
+
+.Bar {
+	width: 100%;
+	overflow: hidden
+}
+
+.Bar .BarItem {
+	padding: 8px 16px;
+	float: left;
+	width: auto;
+	border: none;
+	display: block;
+	outline: 0;
+	cursor: pointer;
+	text-align: start;
+}
+
+.Bar .Button {
+	white-space: normal
+}
+
+.Bar:after,
+.Bar:before {
+	content: "";
+	display: table;
+	clear: both
+}
+
+.w3-hide {
+	display: none!important
+}
+
+/* @media (max-width:600px) {
+	.HideSmall {
+		display: none!important
+	}
+} */
+
+@media (min-width:993px) {
+	.w3-hide-large {
+		display: none!important
+	}
+}
+
+.w3-display-right {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translate(0, -50%);
+	-ms-transform: translate(0, -50%)
+}
+
+.Circle {
+	border-radius: 50%
+}
+
+.w3-card,
+.w3-card-2 {
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12)
+}
+
+.W3Card4 {
+	box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .2), 0 4px 20px 0 rgba(0, 0, 0, .19)
+}
+
+@keyframes w3-spin {
+	0% {
+		transform: rotate(0)
+	}
+	100% {
+		transform: rotate(359deg)
+	}
+}
+
+@keyframes fading {
+	0% {
+		opacity: 0
+	}
+	50% {
+		opacity: 1
+	}
+	100% {
+		opacity: 0
+	}
+}
+
+@keyframes opac {
+	from {
+		opacity: 0
+	}
+	to {
+		opacity: 1
+	}
+}
+
+@keyframes animatetop {
+	from {
+		top: -300px;
+		opacity: 0
+	}
+	to {
+		top: 0;
+		opacity: 1
+	}
+}
+
+@keyframes animateleft {
+	from {
+		left: -300px;
+		opacity: 0
+	}
+	to {
+		left: 0;
+		opacity: 1
+	}
+}
+
+@keyframes animateright {
+	from {
+		right: -300px;
+		opacity: 0
+	}
+	to {
+		right: 0;
+		opacity: 1
+	}
+}
+
+@keyframes animatebottom {
+	from {
+		bottom: -300px;
+		opacity: 0
+	}
+	to {
+		bottom: 0;
+		opacity: 1
+	}
+}
+
+@keyframes animatezoom {
+	from {
+		transform: scale(0)
+	}
+	to {
+		transform: scale(1)
+	}
+}
+
+.w3-small {
+	font-size: 12px!important
+}
+
+.Large {
+	font-size: 18px;
+	color: red;
+}
+
+.Xlarge {
+	font-size: 24px!important
+}
+
+.Right {
+	float: right!important;
+	margin-right: 2rem;
+	margin-top: 8px;
+}
+
+.Button:hover {
+	color: #000!important;
+	background-color: #ccc!important
+}
+
+.White {
+	color: #000!important;
+	background-color: #fff!important
+}
+.Trash {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 10px;
+    height: 12px;
+    border: 2px solid transparent;
+    box-shadow:
+        0 0 0 2px,
+        inset -2px 0 0,
+        inset 2px 0 0;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin-top: 1.5rem;
+	margin-right: 2.5rem;
+	cursor: pointer;
+	float: right;
+}
+.Trash::after,
+.Trash::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute
+}
+.Trash::after {
+    background: currentColor;
+    border-radius: 3px;
+    width: 16px;
+    height: 2px;
+    top: -4px;
+    left: -5px
+}
+.Trash::before {
+    width: 10px;
+    height: 4px;
+    border: 2px solid;
+    border-bottom: transparent;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    top: -7px;
+    left: -2px
+}
+
+.Converting {
+	margin-right: 2.5rem;
+	float: right;
+}
+.Arrow {
+	cursor: pointer;
+	color: black;
+	font-size: 31px;
+	font-weight: bold;
+	line-height: 0px;
+	padding: 11px 3px;
+	margin-top: 1rem;
+	margin-right: 2.5rem;
+	float: right;
+	}
+	.Arrow:before{
+	 content: "×";
+		}

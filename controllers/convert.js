@@ -1,8 +1,7 @@
-const { createWriteStream } = require('fs');
 const path = require('path');
-const { createArchiver, convertPDFtoImage, getPDFPages, uploadAndUnlinkFile, unlinkFile } = require('../utils/pdf-convert');
+const {convertPDFtoImage, getPDFPages, uploadAndUnlinkFile, unlinkFile } = require('../utils/pdf-convert');
 const rootPath = require('../rootpath');
-const { uploadFile, getFileStream, BucketNames } = require('../s3');
+const { uploadFile, BucketNames } = require('../s3');
 const openDb = require('../db');
 
 const convertToJPG = async (req, res, next) => {
@@ -18,14 +17,14 @@ const convertToJPG = async (req, res, next) => {
     await db.run('UPDATE pdfuploads SET status = ? WHERE id = ?', 'Uploading to S3', lastID);
     const leftPath = req.file.filename.substring(0, req.file.filename.lastIndexOf('.'));
     const convertedImages = [];
-    const zipPath = path.join(rootPath, 'output', 'output.zip');
-    const output = createWriteStream(zipPath);
-    output.on('close', async () => {
-      await uploadFile({ path: zipPath, filename: `${leftPath}.zip` }, BucketNames.pdfOutBucketName);
-      await unlinkFile(zipPath);
-    });
-    const archive = createArchiver();
-    archive.pipe(output);
+    // const zipPath = path.join(rootPath, 'output', 'output.zip');
+    // const output = createWriteStream(zipPath);
+    // output.on('close', async () => {
+    //   await uploadFile({ path: zipPath, filename: `${leftPath}.zip` }, BucketNames.pdfOutBucketName);
+    //   await unlinkFile(zipPath);
+    // });
+    // const archive = createArchiver();
+    // archive.pipe(output);
     if (pages === 1) {
       const fileInfo = {
         // outputFileName: `${leftPath}.jpg`,
@@ -45,7 +44,7 @@ const convertToJPG = async (req, res, next) => {
         convertedImages.push(await uploadAndUnlinkFile(db, lastID, i + 1, fileInfo, archive));
       }
     }
-    archive.finalize();
+    // archive.finalize();
     await unlinkFile(p);
     await db.run('UPDATE pdfuploads SET status = ? WHERE id = ?', '', lastID);
     // res.json({
@@ -63,12 +62,12 @@ const getExistingConvertedFiles = async (req, res, next) => {
     next(e);
   }
 }
-const convertToZip = (req, res, next) => {
-  try {
-    const fileStream = getFileStream(req.body.filename, BucketNames.pdfOutBucketName);
-    fileStream.pipe(res);
-  } catch (e) {
-    next(e);
-  }
-}
-module.exports = { convertToJPG, convertToZip, getExistingConvertedFiles }
+// const convertToZip = (req, res, next) => {
+//   try {
+//     const fileStream = getFileStream(req.body.filename, BucketNames.pdfOutBucketName);
+//     fileStream.pipe(res);
+//   } catch (e) {
+//     next(e);
+//   }
+// }
+module.exports = { convertToJPG, getExistingConvertedFiles }
