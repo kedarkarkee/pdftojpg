@@ -1,5 +1,5 @@
 const path = require('path');
-const {convertPDFtoImage, getPDFPages, uploadAndUnlinkFile, unlinkFile } = require('../utils/pdf-convert');
+const { convertPDFtoImage, getPDFPages, uploadAndUnlinkFile, unlinkFile } = require('../utils/pdf-convert');
 const rootPath = require('../rootpath');
 const { uploadFile, BucketNames } = require('../s3');
 const openDb = require('../db');
@@ -32,7 +32,7 @@ const convertToJPG = async (req, res, next) => {
         newFileName: `${leftPath}1.jpg`,
         originalName: req.file.filename
       };
-      convertedImages.push(await uploadAndUnlinkFile(db, lastID, 1, fileInfo, archive));
+      convertedImages.push(await uploadAndUnlinkFile(db, lastID, 1, fileInfo));
     } else {
       // for (let i = 1; i <= pages; i++) {
       for (let i = 0; i < pages; i++) {
@@ -41,7 +41,7 @@ const convertToJPG = async (req, res, next) => {
           newFileName: `${leftPath}${i + 1}.jpg`,
           originalName: req.file.filename
         };
-        convertedImages.push(await uploadAndUnlinkFile(db, lastID, i + 1, fileInfo, archive));
+        convertedImages.push(await uploadAndUnlinkFile(db, lastID, i + 1, fileInfo));
       }
     }
     // archive.finalize();
@@ -51,6 +51,7 @@ const convertToJPG = async (req, res, next) => {
     //   files: convertedImages
     // });
   } catch (e) {
+    console.log(e);
   }
 }
 const getExistingConvertedFiles = async (req, res, next) => {

@@ -34,9 +34,8 @@ const getPDFPages = async (filePath) => {
   const pdfDetails = await pdf(fs.readFileSync(filePath));
   return pdfDetails.numpages;
 }
-const uploadAndUnlinkFile = async (db, lastID, page, fileInfo, archive) => {
+const uploadAndUnlinkFile = async (db, lastID, page, fileInfo) => {
   const outputPath = path.join(rootPath, 'output', fileInfo.outputFileName);
-  archive.file(outputPath, { name: fileInfo.newFileName });
   const { Key, Location } = await uploadFile({ path: outputPath, filename: fileInfo.newFileName }, BucketNames.pdfOutBucketName);
   const cDbRes = await db.run('INSERT INTO pdfoutputs (inputId,fileName,key,location,page) VALUES (?,?,?,?,?)', lastID, fileInfo.originalName, Key, Location, page);
   await unlinkFile(outputPath);
