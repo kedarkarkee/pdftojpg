@@ -2,3 +2,4 @@ node_modules/
 .env
 Copyy.env
 database.db
+!client/build/
